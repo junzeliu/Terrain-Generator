@@ -1,6 +1,5 @@
 /**
  * @fileoverview Utilities for supporting terrain-related calculation.
- * @Junze Liu junzel2@illinois.edu
  */
 
 /**

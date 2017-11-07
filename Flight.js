@@ -1,6 +1,5 @@
 /**
  * @fileoverview Utilities for supporting rendering a terrain and animation.
- * @Junze Liu junzel2@illinois.edu
  */
 
 var gl;
