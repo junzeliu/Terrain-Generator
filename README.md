@@ -38,4 +38,4 @@ Having trouble with Pages? Check out our [documentation](https://help.github.com
 
 ### My URL
 
-https://justinliu412.github.io/Junze-Projects-Site/
+https://justinliu412.github.io/Terrain-Generator/
