@@ -28,8 +28,7 @@ The Diamond step and Square step should be called one after another interactivel
 
 @param {Array} x-y plane mesh array of vertices<br/>
 @param {number} length of side of the x-y plane (a 2D array)<br/>
-@param {number} how much the random height addition gets shrunk<br/>
-
+@param {number} how much the random height addition gets shrunk
 ```markdown
 function diamondSquare(inputArray, n, scale)
 {
@@ -50,9 +49,9 @@ function diamondSquare(inputArray, n, scale)
 
 Function diamond() completes the diamond step. 
 
-@param {Array} x-y plane mesh array of vertices
-@param {number} stride of each step calculation
-@param {number} length of side of the x-y plane (a 2D array)
+@param {Array} x-y plane mesh array of vertices<br/>
+@param {number} stride of each step calculation<br/>
+@param {number} length of side of the x-y plane (a 2D array)<br/>
 @param {number} how much the random height addition gets shrunk
 
 ```markdown
@@ -77,9 +76,9 @@ function diamond(inputArray, stride, n, scale)
 
 Function square() completes the square step. 
 
-@param {Array} x-y plane mesh array of vertices
-@param {number} stride of each step calculation
-@param {number} length of side of the x-y plane (a 2D array)
+@param {Array} x-y plane mesh array of vertices<br/>
+@param {number} stride of each step calculation<br/>
+@param {number} length of side of the x-y plane (a 2D array)<br/>
 @param {number} how much the random height addition gets shrunk
 ```markdown
 function square(inputArray, stride, n, scale) 
@@ -123,18 +122,6 @@ function square(inputArray, stride, n, scale)
 For more details see [terrainModeling.js](https://github.com/JustinLiu412/Terrain-Generator/blob/master/terrainModeling.js).
 
 ### [DEMO](Flight.html)
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
-
-### Git Commands
-echo "# Example" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git remote add origin https://github.com/JustinLiu412/Example.git
-git push -u origin master
 
 ### URL
 https://justinliu412.github.io/Terrain-Generator/
