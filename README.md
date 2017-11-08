@@ -4,7 +4,7 @@ This is a project related to Interactive Computer Graphic technique, using WebGL
 
 ![alt text][logo]
 
-[logo]: images/screenshot.png "screenshot of terrain"
+[logo]: images/screen_shot.png "screenshot of terrain"
 
 ### Diamond-Square Algorithm
 
