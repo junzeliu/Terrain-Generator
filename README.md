@@ -23,6 +23,8 @@ During the square steps, points located on the edges of the array will have only
 ![Hello](images/Diamond_Square.png "from Wikipedia")
 [Read more](https://en.wikipedia.org/wiki/Diamond-square_algorithm)
 
+(from Wikipedia.com)
+
 ## Implementation
 (implemented in Javascript)
 
