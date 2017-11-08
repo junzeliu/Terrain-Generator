@@ -26,9 +26,9 @@ During the square steps, points located on the edges of the array will have only
 
 The Diamond step and Square step should be called one after another interactively, to generate altitude of terrain.
 
-@param {Array} x-y plane mesh array of vertices
-@param {number} length of side of the x-y plane (a 2D array)
-@param {number} how much the random height addition gets shrunk
+@param {Array} x-y plane mesh array of vertices\s
+@param {number} length of side of the x-y plane (a 2D array)\s
+@param {number} how much the random height addition gets shrunk\s
 
 ```markdown
 function diamondSquare(inputArray, n, scale)
