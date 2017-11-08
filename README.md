@@ -2,6 +2,10 @@
 
 This is a project related to Interactive Computer Graphic technique, using WebGL and Diamond-Square algorithm to randomly generate terrain automatically. 
 
+![alt text][logo]
+
+[logo]: images/screenshot.png "screenshot of terrain"
+
 ### Diamond-Square Algorithm
 
 The diamond-square algorithm begins with a 2D square array of width and height 2n + 1. The four corner points of the array must firstly be set to initial values. The diamond and square steps are then performed alternately until all array values have been set.
@@ -16,7 +20,7 @@ During the square steps, points located on the edges of the array will have only
 
 ![alt text][logo]
 
-[logo]: images/Diamond-Square.png "Diamond-Square Algorithm"
+[logo]: images/Diamond_Square.png "Diamond-Square Algorithm"
 
 ```markdown
 Syntax highlighted code block
