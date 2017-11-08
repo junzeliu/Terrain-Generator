@@ -16,7 +16,7 @@ During the square steps, points located on the edges of the array will have only
 
 ![alt text][logo]
 
-[logo]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 2"
+[logo]: images/Diamond-Square.png "Diamond-Square Algorithm"
 
 ```markdown
 Syntax highlighted code block
