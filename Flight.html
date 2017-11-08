@@ -1,0 +1,206 @@
+<!DOCTYPE HTML> 
+<html lang="en"> 
+<head>
+<title>MP2 Part 1: Terrain Generation</title>
+<meta charset="utf-8"> 
+</head>
+
+    
+<script id="shader-vs" type="x-shader/x-vertex">
+
+   attribute vec3 aVertexNormal;
+   attribute vec3 aVertexPosition;
+   attribute float aVertexHeight; 
+
+    uniform mat4 uMVMatrix;
+    uniform mat4 uPMatrix;
+    uniform mat3 uNMatrix;
+
+    // uniform vec3 uLightPosition;
+
+    varying vec3 uAmbientMaterialColor;
+    varying vec3 uDiffuseMaterialColor;
+    varying vec3 uSpecularMaterialColor;
+
+    varying vec3 vPosition; 
+    varying vec3 vNormal; 
+
+    varying float atten; 
+    varying float fogFactor; 
+    attribute vec3 tangent; 
+    varying float fogCoord; 
+
+    void main(void) {
+
+    // Set fog density
+    float fogDensity = 0.5; 
+    // Set value for log2
+    const float LOG2 = 1.442695;
+
+    // Set color along different heights
+    // Lowest height->Higheset height: Blue->Green->Red->White
+    if(aVertexHeight < 0.49)
+    {
+        // Blue (ocean)
+        uAmbientMaterialColor[0]=0.09; uAmbientMaterialColor[1]=0.39; uAmbientMaterialColor[2]=0.85; 
+        uDiffuseMaterialColor[0]=0.09; uDiffuseMaterialColor[1]=0.39; uDiffuseMaterialColor[2]=0.85; 
+        uSpecularMaterialColor[0]=0.09; uSpecularMaterialColor[1]=0.39; uSpecularMaterialColor[2]=0.85; 
+    }
+    else if(aVertexHeight>=0.49 && aVertexHeight<0.5)
+    {
+        // Teal (rocks)
+        uAmbientMaterialColor[0]=0.14; uAmbientMaterialColor[1]=0.35; uAmbientMaterialColor[2]=0.35; 
+        uDiffuseMaterialColor[0]=0.14; uDiffuseMaterialColor[1]=0.35; uDiffuseMaterialColor[2]=0.35; 
+        uSpecularMaterialColor[0]=0.14; uSpecularMaterialColor[1]=0.35; uSpecularMaterialColor[2]=0.35; 
+    }
+    else if(aVertexHeight>=0.5 && aVertexHeight<0.55)
+    {
+        // Green (grass)
+        uAmbientMaterialColor[0]=0.14; uAmbientMaterialColor[1]=0.35; uAmbientMaterialColor[2]=0.1; 
+        uDiffuseMaterialColor[0]=0.14; uDiffuseMaterialColor[1]=0.35; uDiffuseMaterialColor[2]=0.1; 
+        uSpecularMaterialColor[0]=0.14; uSpecularMaterialColor[1]=0.35; uSpecularMaterialColor[2]=0.1; 
+    }
+    else if(aVertexHeight>=0.55 && aVertexHeight<0.6)
+    {
+        // Darker Green (forests)
+        uAmbientMaterialColor[0]=0.2; uAmbientMaterialColor[1]=0.3; uAmbientMaterialColor[2]=0.2; 
+        uDiffuseMaterialColor[0]=0.2; uDiffuseMaterialColor[1]=0.3; uDiffuseMaterialColor[2]=0.2; 
+        uSpecularMaterialColor[0]=0.2; uSpecularMaterialColor[1]=0.3; uSpecularMaterialColor[2]=0.2; 
+    }
+    else if(aVertexHeight>=0.6 && aVertexHeight<0.7)
+    {
+        // Brown (soil)
+        uAmbientMaterialColor[0]=0.3; uAmbientMaterialColor[1]=0.12; uAmbientMaterialColor[2]=0.12; 
+        uDiffuseMaterialColor[0]=0.3; uDiffuseMaterialColor[1]=0.12; uDiffuseMaterialColor[2]=0.12; 
+        uSpecularMaterialColor[0]=0.3; uSpecularMaterialColor[1]=0.12; uSpecularMaterialColor[2]=0.12; 
+    }
+    else if(aVertexHeight>=0.7)
+    {
+        // White (snow)
+        uAmbientMaterialColor[0]=aVertexHeight; uAmbientMaterialColor[1]=aVertexHeight; uAmbientMaterialColor[2]=aVertexHeight; 
+        uDiffuseMaterialColor[0]=aVertexHeight; uDiffuseMaterialColor[1]=aVertexHeight; uDiffuseMaterialColor[2]=aVertexHeight; 
+        uSpecularMaterialColor[0]=aVertexHeight; uSpecularMaterialColor[1]=aVertexHeight; uSpecularMaterialColor[2]=aVertexHeight; 
+    }
+    
+    // Get the vertex position in eye coordinates
+    vec4 vertexPositionEye4 = uMVMatrix * vec4(aVertexPosition, 1.0);
+    vec3 vPosition = vertexPositionEye4.xyz / vertexPositionEye4.w;
+    
+    // Transform the normal (n) to eye coordinates
+    vNormal = normalize(uNMatrix * aVertexNormal);
+    
+    // Calculate distance between vertex and eye
+    fogCoord = length(vPosition); 
+    fogFactor = exp2( -fogDensity * 
+                       fogDensity * 
+                       fogCoord * 
+                       fogCoord * 
+                       LOG2 );
+    fogFactor = clamp(fogFactor, 0.0, 1.0);
+
+    gl_Position = uPMatrix*uMVMatrix*vec4(aVertexPosition, 1.0);
+        
+    }
+</script>
+  
+<script id="shader-fs" type="x-shader/x-fragment">
+precision mediump float;
+
+varying float atten; 
+varying float fogFactor; 
+
+varying vec3 vNormal; 
+varying vec3 vPosition; 
+varying vec3 normalCheck; 
+
+varying vec3 uAmbientMaterialColor;
+varying vec3 uDiffuseMaterialColor;
+varying vec3 uSpecularMaterialColor;
+
+uniform vec3 uLightPosition;
+
+uniform vec3 uAmbientLightColor;
+uniform vec3 uDiffuseLightColor;
+uniform vec3 uSpecularLightColor;
+
+varying float fogCoord; 
+
+uniform float uFogSwitch;
+
+// uniform vec4 aVertexColor; 
+
+const float shininess = 32.0;
+const float beta = 60.0; 
+
+void main(void) { 
+
+    vec4 vColor; 
+    vec4 fogColor = vec4(1.0, 1.0, 1.0, 1.0);
+
+    // Calculate the vector (l) to the light source
+    vec3 vectorToLightSource = normalize(uLightPosition - vPosition);
+    
+    // Calculate n dot l for diffuse lighting
+    float diffuseLightWeightning = max(dot(vNormal, 
+                                    vectorToLightSource), 0.0);
+                                       
+    // Calculate the reflection vector (r) that is needed for specular light
+    vec3 reflectionVector = normalize(reflect(-vectorToLightSource, 
+                                             vNormal));
+    
+    // The camera in eye coordinates is located in the origin and is pointing
+    // along the negative z-axis. Calculate viewVector (v) 
+    // in eye coordinates as:
+    // (0.0, 0.0, 0.0) - vPosition
+    vec3 viewVectorEye = -normalize(vPosition); 
+
+    // Calculate H
+    vec3 halfwayVector = normalize(vectorToLightSource + viewVectorEye); 
+    
+    float rdotv = max(dot(reflectionVector, viewVectorEye), 0.0); 
+    float ndoth = max(dot(vNormal, halfwayVector), 0.0); 
+    
+    // float specularLightWeightning = pow(rdotv, shininess); // Phong
+    float specularLightWeightning = pow(ndoth, beta); // Blin-Phong
+
+    // Sum up all three reflection components and send to the fragment shader
+    vColor = vec4((uAmbientLightColor*uAmbientMaterialColor
+                + (uDiffuseLightColor*uDiffuseMaterialColor) * diffuseLightWeightning
+                + (uSpecularLightColor*uSpecularMaterialColor) * specularLightWeightning),1.0);
+
+    // Check if fog switch is on
+    if (uFogSwitch==1.0) {
+        gl_FragColor = mix(fogColor, vColor, fogFactor ); 
+    }
+    else {
+        gl_FragColor = vColor; 
+    }
+
+    // float z = fogCoord / 1.442695; 
+    // gl_FragColor = vec4(z,z,z,1.0); 
+
+ }
+</script>
+
+<script src="gl-matrix-min.js"></script> 
+<script src="webgl-utils.js"></script>
+<script src="key_helpers.js"></script>
+<script src="terrainModeling.js"></script>  
+<script src="Flight.js"></script>   
+<body onload="startup();">
+ <canvas id="myGLCanvas" width="1000" height="550"></canvas>
+      <form id="input_form">
+        <fieldset>
+            <legend>Fog Switch</legend>
+         Fog: <input type="radio" name="primitive" id="fog" value="fog" checked> On
+         <input type="radio" name="primitive" id="no fog" value="no fog"> Off
+        </fieldset>
+      </form>
+    <p>MP2 Part 2: Flight Simulator Navigation</p>
+    <p>Pressing the left (right) arrow key will make the plane roll to its left (right).</p>
+    <p>Pressing the , (.) key will cause the airplane to yaw left (right).</p>
+    <p>Pressing the up (down) arrow key will cause the airplane to pitch up (down).</p>
+    <p>Pressing the + (-) key will increase (decrease) the airplane's speed.</p>
+</body>
+
+</html>
