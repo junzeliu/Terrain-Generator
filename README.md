@@ -24,15 +24,12 @@ During the square steps, points located on the edges of the array will have only
 ## Implementation
 (implemented in Javascript)
 
-The Diamond step and Square step should be called one after another interactively.
+The Diamond step and Square step should be called one after another interactively, to generate altitude of terrain.
+@param {Array} x-y plane mesh array of vertices
+@param {number} length of side of the x-y plane (a 2D array)
+@param {number} how much the random height addition gets shrunk
 
 ```markdown
-# /**
-#  * Iteratively call diamond and square steps of diamond-square algorithm, to generate altitude of terrain
-#  * @param {Array} x-y plane mesh array of vertices
-#  * @param {number} length of side of the x-y plane (a 2D array)
-#  * @param {number} how much the random height addition gets shrunk
-#  */
 function diamondSquare(inputArray, n, scale)
 {
     inputArray[0][0] = 0.01; 
@@ -51,15 +48,12 @@ function diamondSquare(inputArray, n, scale)
 ```
 
 Function diamond() completes the diamond step. 
+@param {Array} x-y plane mesh array of vertices
+@param {number} stride of each step calculation
+@param {number} length of side of the x-y plane (a 2D array)
+@param {number} how much the random height addition gets shrunk
 
 ```markdown
-# /**
-#  * Dianmond step for diamond-square algorithm
-#  * @param {Array} x-y plane mesh array of vertices
-#  * @param {number} stride of each step calculation
-#  * @param {number} length of side of the x-y plane (a 2D array)
-#  * @param {number} how much the random height addition gets shrunk
-#  */
 function diamond(inputArray, stride, n, scale)
 {
     for(var i=stride; i<n+1; i+=2*stride)
@@ -80,14 +74,11 @@ function diamond(inputArray, stride, n, scale)
 ```
 
 Function square() completes the square step. 
+@param {Array} x-y plane mesh array of vertices
+@param {number} stride of each step calculation
+@param {number} length of side of the x-y plane (a 2D array)
+@param {number} how much the random height addition gets shrunk
 ```markdown
-# /**
-#  * Square step for diamond-square algorithm
-#  * @param {Array} x-y plane mesh array of vertices
-#  * @param {number} stride of each step calculation
-#  * @param {number} length of side of the x-y plane (a 2D array)
-#  * @param {number} how much the random height addition gets shrunk
-#  */
 function square(inputArray, stride, n, scale) 
 {
     for(var i=0; i<n+1; i+=stride)
@@ -126,7 +117,7 @@ function square(inputArray, stride, n, scale)
 }
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+For more details see [terrainModeling.js](https://github.com/JustinLiu412/Terrain-Generator/blob/master/terrainModeling.js).
 
 ### [DEMO](Flight.html)
 
