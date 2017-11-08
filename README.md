@@ -1,12 +1,18 @@
-## Welcome to GitHub Pages
+## Introduction
 
-You can use the [editor on GitHub](https://github.com/JustinLiu412/Example/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+This is a project related to Interactive Computer Graphic technique, using WebGL and Diamond-Square algorithm to randomly generate terrain automatically. 
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Diamond-Square Algorithm
 
-### Markdown
+The diamond-square algorithm begins with a 2D square array of width and height 2n + 1. The four corner points of the array must firstly be set to initial values. The diamond and square steps are then performed alternately until all array values have been set.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+__The diamond step:__ For each square in the array, set the midpoint of that square to be the average of the four corner points plus a random value.
+
+__The square step:__ For each diamond in the array, set the midpoint of that diamond to be the average of the four corner points plus a random value.
+
+At each iteration, the magnitude of the random value should be reduced.
+
+During the square steps, points located on the edges of the array will have only three adjacent values set rather than four. There are a number of ways to handle this complication - the simplest being to take the average of just the three adjacent values. Another option is to 'wrap around', taking the fourth value from the other side of the array. When used with consistent initial corner values this method also allows generated fractals to be stitched together without discontinuities.
 
 ```markdown
 Syntax highlighted code block
