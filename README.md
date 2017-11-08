@@ -18,7 +18,8 @@ At each iteration, the magnitude of the random value should be reduced.
 
 During the square steps, points located on the edges of the array will have only three adjacent values set rather than four. There are a number of ways to handle this complication - the simplest being to take the average of just the three adjacent values. Another option is to 'wrap around', taking the fourth value from the other side of the array. When used with consistent initial corner values this method also allows generated fractals to be stitched together without discontinuities.
 
-![images/Diamond_Square.png](https://en.wikipedia.org/wiki/Diamond-square_algorithm)
+![Hello](images/Diamond_Square.png "from Wikipedia")
+[Read more](https://en.wikipedia.org/wiki/Diamond-square_algorithm)
 
 ```markdown
 Syntax highlighted code block
