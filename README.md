@@ -24,6 +24,28 @@ During the square steps, points located on the edges of the array will have only
 ```markdown
 Syntax highlighted code block
 
+/**
+ * Iteratively call diamond and square steps of diamond-square algorithm, to generate altitude of terrain
+ * @param {Array} x-y plane mesh array of vertices
+ * @param {number} length of side of the x-y plane (a 2D array)
+ * @param {number} how much the random height addition gets shrunk
+ */
+function diamondSquare(inputArray, n, scale)
+{
+    inputArray[0][0] = 0.01; 
+    inputArray[0][n] = 0.01; 
+    inputArray[n][0] = 0.01; 
+    inputArray[n][n] = 0.01; 
+    var l = n / 2; 
+    while (l >= 1)
+    {
+        diamond(inputArray, l, n, scale); 
+        square(inputArray, l, n, scale); 
+        l /= 2; 
+        scale *= 0.6; 
+    }
+}
+
 # Header 1
 ## Header 2
 ### Header 3
@@ -41,9 +63,7 @@ Syntax highlighted code block
 
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
 
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/JustinLiu412/Example/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+### [DEMO](Flight.html)
 
 ### Support or Contact
 
