@@ -49,3 +49,6 @@ git add README.md
 git commit -m "first commit"
 git remote add origin https://github.com/JustinLiu412/Example.git
 git push -u origin master
+
+### URL
+https://justinliu412.github.io/Terrain-Generator/
