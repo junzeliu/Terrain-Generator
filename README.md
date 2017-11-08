@@ -6,7 +6,7 @@ This is a project related to Interactive Computer Graphic technique, using WebGL
 
 [logo]: images/screen_shot.png "Screenshot of Terrain"
 
-### Diamond-Square Algorithm
+## Diamond-Square Algorithm
 
 The diamond-square algorithm begins with a 2D square array of width and height 2n + 1. The four corner points of the array must firstly be set to initial values. The diamond and square steps are then performed alternately until all array values have been set.
 
@@ -21,15 +21,18 @@ During the square steps, points located on the edges of the array will have only
 ![Hello](images/Diamond_Square.png "from Wikipedia")
 [Read more](https://en.wikipedia.org/wiki/Diamond-square_algorithm)
 
-```markdown
-Syntax highlighted code block
+## Implementation
+(implemented in Javascript)
 
-/**
- * Iteratively call diamond and square steps of diamond-square algorithm, to generate altitude of terrain
- * @param {Array} x-y plane mesh array of vertices
- * @param {number} length of side of the x-y plane (a 2D array)
- * @param {number} how much the random height addition gets shrunk
- */
+The Diamond step and Square step should be called one after another interactively.
+
+```markdown
+# /**
+#  * Iteratively call diamond and square steps of diamond-square algorithm, to generate altitude of terrain
+#  * @param {Array} x-y plane mesh array of vertices
+#  * @param {number} length of side of the x-y plane (a 2D array)
+#  * @param {number} how much the random height addition gets shrunk
+#  */
 function diamondSquare(inputArray, n, scale)
 {
     inputArray[0][0] = 0.01; 
@@ -45,20 +48,82 @@ function diamondSquare(inputArray, n, scale)
         scale *= 0.6; 
     }
 }
+```
 
-# Header 1
-## Header 2
-### Header 3
+Function diamond() completes the diamond step. 
 
-- Bulleted
-- List
+```markdown
+# /**
+#  * Dianmond step for diamond-square algorithm
+#  * @param {Array} x-y plane mesh array of vertices
+#  * @param {number} stride of each step calculation
+#  * @param {number} length of side of the x-y plane (a 2D array)
+#  * @param {number} how much the random height addition gets shrunk
+#  */
+function diamond(inputArray, stride, n, scale)
+{
+    for(var i=stride; i<n+1; i+=2*stride)
+    {
+        for(var j=stride; j<n+1; j+=2*stride)
+        {
+            var lb = inputArray[i-stride][j-stride]; 
+            var lt = inputArray[i+stride][j-stride]; 
+            var rt = inputArray[i+stride][j+stride]; 
+            var rb = inputArray[i-stride][j+stride]; 
+            if(inputArray[i][j]==0.0 || inputArray[i][j] == 0.001)
+            {
+                inputArray[i][j] = (lb+lt+rt+rb)/4 + scale*(Math.random()); 
+            }
+        }
+    }
+}
+```
 
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+Function square() completes the square step. 
+```markdown
+# /**
+#  * Square step for diamond-square algorithm
+#  * @param {Array} x-y plane mesh array of vertices
+#  * @param {number} stride of each step calculation
+#  * @param {number} length of side of the x-y plane (a 2D array)
+#  * @param {number} how much the random height addition gets shrunk
+#  */
+function square(inputArray, stride, n, scale) 
+{
+    for(var i=0; i<n+1; i+=stride)
+    {
+        for(var j=0; j<n+1; j+=stride)
+        {
+            if(i-stride >= 0) var top = inputArray[i-stride][j]; 
+            if(i+stride < n+1) var bottom = inputArray[i+stride][j]; 
+            if(j-stride >= 0) var left = inputArray[i][j-stride]; 
+            if(j+stride < n+1) var right = inputArray[i][j+stride]; 
+            if(inputArray[i][j] == 0.0 || inputArray[i][j] == 0.001)
+            {
+              if((i>=stride) && (i<n+1-stride) && (j>=stride) && (j<n+1-stride)) 
+              {
+                  inputArray[i][j] = (top+bottom+left+right)/4 + scale*(Math.random()); 
+              }
+              else if(i==0 && j-stride>=0 && j+stride<n+1) 
+              {
+                  inputArray[i][j] = (bottom+left+right)/3 + scale*(Math.random()); 
+              }
+              else if(i==n && j-stride>=0 && j+stride<n+1)
+              {
+                  inputArray[i][j] = (top+left+right)/3 + scale*(Math.random());
+              }
+                else if(j==0 && i-stride>=0 && i+stride<n+1)
+              {
+                  inputArray[i][j] = (top+bottom+right)/3 + scale*(Math.random());
+              }
+              else if(j==n && i-stride>=0 && i+stride<n+1)
+              {
+                  inputArray[i][j] = (top+bottom+left)/3 + scale*(Math.random()); 
+              }
+            }
+        }
+    }
+}
 ```
 
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
