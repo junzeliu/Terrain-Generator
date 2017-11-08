@@ -6,6 +6,8 @@ This is a project related to Interactive Computer Graphic technique, using WebGL
 
 [logo]: images/screen_shot.png "Screenshot of Terrain"
 
+### [DEMO](Flight.html)
+
 ## Diamond-Square Algorithm
 
 The diamond-square algorithm begins with a 2D square array of width and height 2n + 1. The four corner points of the array must firstly be set to initial values. The diamond and square steps are then performed alternately until all array values have been set.
@@ -120,8 +122,6 @@ function square(inputArray, stride, n, scale)
 ```
 
 For more details see [terrainModeling.js](https://github.com/JustinLiu412/Terrain-Generator/blob/master/terrainModeling.js).
-
-### [DEMO](Flight.html)
 
 ### URL
 https://justinliu412.github.io/Terrain-Generator/
