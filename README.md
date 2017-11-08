@@ -2,9 +2,7 @@
 
 This is a project related to Interactive Computer Graphic technique, using WebGL and Diamond-Square algorithm to randomly generate terrain automatically. 
 
-![alt text][logo]
-
-[logo]: images/screen_shot.png "screenshot of terrain"
+![Image]images/screen_shot.png
 
 ### Diamond-Square Algorithm
 
