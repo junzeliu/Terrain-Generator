@@ -126,4 +126,4 @@ function square(inputArray, stride, n, scale)
 For more details see [terrainModeling.js](https://github.com/JustinLiu412/Terrain-Generator/blob/master/terrainModeling.js).
 
 ### URL
-https://justinliu412.github.io/Terrain-Generator/
+https://junzel.github.io/Terrain-Generator/
